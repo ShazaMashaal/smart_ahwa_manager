@@ -13,6 +13,8 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final bool? isObscureText;
   final Widget? suffixIcon;
+  final String? errorText;
+  final ValueChanged<String>? onChanged;
 
   const CustomTextFormField({
     super.key,
@@ -26,12 +28,15 @@ class CustomTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.controller,
     this.fillColor,
+    this.errorText,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      onChanged: onChanged,
       decoration: InputDecoration(
         isDense: true,
         contentPadding:
@@ -52,15 +57,25 @@ class CustomTextFormField extends StatelessWidget {
                 width: 2.w,
               ),
             ),
+        errorBorder:
+            OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.r),
+              borderSide: BorderSide(
+                color: Colors.red.shade900,
+                width: 1.w,
+              ),
+            ),
+        errorStyle: TextStyle(color: Colors.red.shade900),
         hintStyle: hintStyle ?? TextStyles.font14LightGrayMedium,
         hintText: hintText,
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: fillColor ?? ColorsManager.whiteGray,
+        errorText: errorText,
       ),
 
       obscureText: isObscureText ?? false,
-      style: inputTextStyle ?? TextStyles.font14NavyMedium,
+      style: inputTextStyle ?? TextStyles.font14BrownMedium,
     );
   }
 }

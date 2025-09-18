@@ -27,10 +27,15 @@ class TextStyles {
     color: ColorsManager.lightGray,
   );
 
-  static TextStyle font14NavyMedium = TextStyle(
+  static TextStyle font14BrownMedium = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeightHelper.medium,
-    color: ColorsManager.navy,
+    color: ColorsManager.mainBrown,
+  );
+  static TextStyle font18BrownRegular = TextStyle(
+    fontSize: 18.sp,
+    fontWeight: FontWeightHelper.medium,
+    color: ColorsManager.mainBrown,
   );
   static TextStyle font16WhiteSemiBold = TextStyle(
     fontSize: 16.sp,
