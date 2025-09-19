@@ -19,24 +19,32 @@ Smart Ahwa Manager is a Flutter application that helps café owners manage order
 
 | Home Screen |  Pending Orders Screen|
 
- 
-![WhatsApp Image 2025-09-19 at 16 55 25_16d595df](https://github.com/user-attachments/assets/e4351941-e9fc-4581-8a32-465dd987e56f)
 
-![WhatsApp Image 2025-09-19 at 16 55 26_046bb98a](https://github.com/user-attachments/assets/b2658d01-6e33-4fb4-95ac-6acabc95d28d)
+<img src="https://github.com/user-attachments/assets/e4351941-e9fc-4581-8a32-465dd987e56f" alt="Home Screen" width="200"/>
+<img src="https://github.com/user-attachments/assets/b2658d01-6e33-4fb4-95ac-6acabc95d28d" alt="Home Screen" width="200"/>
 
+## OOP Principles
 
-<!--
 Encapsulation:
-Data is kept private inside classes, and access is provided only through well-defined public methods. This protects the integrity of the data and reduces coupling.
+
+<img src="https://github.com/user-attachments/assets/b42f7036-bc05-4d8d-bb33-44ec85b82f34" alt="Home Screen" width="400"/>
+
+In order model class => _completed is private with controlled mutation via markCompleted()
+
+Abstraction:
+
+<img src="https://github.com/user-attachments/assets/f101fbc0-a05d-4e7c-ba00-9ff89946b0ba" alt="Home Screen" width="400"/>
+
+Here, Drink.of() returns a concrete drink, but the caller only depends on the Drink interface. The code doesn’t care about the type.
 
 Inheritance:
-Common functionality is abstracted into base classes and extended by specialized subclasses, reducing duplication and improving reusability.
 
-Polymorphism:
-Interfaces and abstract classes are used to allow different implementations to be substituted interchangeably without affecting the rest of the system.
+<img src="https://github.com/user-attachments/assets/7eb75cdf-565b-44a0-9b04-d29a3a182473" alt="Home Screen" width="400"/>
 
-🧩 SOLID Principles
-The codebase was designed following the SOLID principles to achieve flexibility and maintainability:
+Drink type inherits from Drink, so they all share properties like type, displayName, and price. This reduces code duplication and enforces consistency.
+
+
+<!-- ## SOLID Principles
 
 Single Responsibility Principle (SRP):
 Each class has one clearly defined responsibility. For example, data models only hold and validate data, while services handle business logic.
@@ -60,6 +68,6 @@ Screens & Widgets — Handle the presentation layer (decoupled from business log
 This layered structure supports scalability and future feature additions without breaking existing code.
 
 🚀 Getting Started
-Clone this repository -->
+Clone this repository 
 Run flutter pub get 
-Launch the app with flutter run
+Launch the app with flutter run -->
