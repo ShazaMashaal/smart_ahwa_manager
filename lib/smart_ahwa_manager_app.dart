@@ -17,13 +17,13 @@ class SmartAhwaManagerApp extends StatelessWidget {
       minTextAdapt: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "Doc App",
+        title: "Smart Ahwa Manager",
         theme: ThemeData(
             primaryColor: ColorsManager.mainBrown,
             scaffoldBackgroundColor: Colors.white
 
         ),
-        initialRoute: Routes.onBoardingScreen,
+        initialRoute: Routes.homeScreen,
         onGenerateRoute: appRouter.generateRoute,
       ),
     );
