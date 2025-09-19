@@ -1,78 +1,48 @@
 import 'package:flutter/material.dart';
-
+import 'package:smart_ahwa_manager/features/home/logic/order_service.dart';
 import '../../../core/helpers/spacing.dart';
 import '../../../core/widgets/custom_drop_down.dart';
 import '../../../core/widgets/custom_text_button.dart';
 import '../../../core/widgets/custom_text_form_field.dart';
-import '../data/models/order.dart';
+import '../data/models/drink.dart';
 
 class AddOrderForm extends StatefulWidget {
-  final Function(Order) onAddOrder;
-  const AddOrderForm({super.key, required this.onAddOrder});
+  final OrderService service;
+  const AddOrderForm({super.key, required this.service});
 
   @override
   State<AddOrderForm> createState() => _AddOrderFormState();
 }
 
 class _AddOrderFormState extends State<AddOrderForm> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _noteController = TextEditingController();
-  String? _nameError;
-  String? _drinkValue;
-  String? _drinkError;
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
+  final _customerNameController = TextEditingController();
+  final _noteController = TextEditingController();
+  DrinkType _selectedDrink = DrinkType.shai;
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _customerNameController.dispose();
     _noteController.dispose();
     super.dispose();
   }
-
-  void _submit() {
-    setState(() {
-      _nameError = _nameController.text.trim().isEmpty ? 'Please enter customer name' : null;
-      _drinkError = (_drinkValue == null || _drinkValue!.isEmpty) ? 'Please choose a drink' : null;
-    });
-
-    final hasError = _nameError != null || _drinkError != null ;
-    if (hasError) return;
-
-    widget.onAddOrder(Order(
-      _nameController.text,
-      _drinkValue.toString(),
-      _noteController.text,
-    ));
-
-    _nameController.clear();
-    _noteController.clear();
-    _drinkValue = null;
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: formKey,
+      key: _formKey,
       child: Column(
         children: [
           CustomTextFormField(
             hintText: "Customer Name",
-            controller: _nameController,
-            errorText: _nameError,
-            onChanged: (_) {
-              if (_nameError != null) setState(() => _nameError = null);
-            },
+            controller: _customerNameController,
+            validator: (v) => (v == null || v.trim().isEmpty) ? 'Enter a name' : null,
           ),
           VSpace(10),
           CustomDropDown(
-            value: _drinkValue,
-            errorText: _drinkError,
+            selectedDrink: _selectedDrink,
             onChanged: (v) {
-              setState(() {
-                _drinkValue = v;
-                _drinkError = null;
-              });
+              if (v == null) return;
+              setState(() => _selectedDrink = v);
             },
           ),
           VSpace(10),
@@ -84,7 +54,22 @@ class _AddOrderFormState extends State<AddOrderForm> {
           VSpace(10),
           CustomTextButton(
             text: "Add Order",
-            onPressed: _submit,
+            onPressed: () async {
+              if (!_formKey.currentState!.validate()) return;
+              await widget.service.addOrder(
+                customerName: _customerNameController.text.trim(),
+                drinkType: _selectedDrink,
+                specialInstructions: _noteController.text.trim(),
+              );
+              if (!mounted) return;
+              FocusScope.of(context).unfocus();
+              _formKey.currentState!.reset();
+              _customerNameController.clear();
+              _noteController.clear();
+              setState(() {
+                _selectedDrink = DrinkType.shai;
+              });
+            },
           ),
         ],
       ),
