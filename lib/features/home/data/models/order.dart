@@ -1,19 +1,29 @@
-class Order{
+import 'drink.dart';
+
+/// Order entity with encapsulated state and behavior.
+class Order {
+  final String id;
   final String customerName;
-  final String drink;
+  final Drink drink;
   final String specialInstructions;
-  bool isCompleted = false;
+  bool _completed;
+  final DateTime createdAt;
 
-  Order(this.customerName, this.drink, this.specialInstructions);
-  Map<String, dynamic> toJson() => {
-    'customer_name': customerName,
-    'drink': drink,
-    'special_instructions': specialInstructions,
-  };
+  Order({
+    required this.id,
+    required this.customerName,
+    required this.drink,
+    this.specialInstructions = '',
+    bool completed = false,
+    DateTime? createdAt,
+  })  : _completed = completed,
+        createdAt = createdAt ?? DateTime.now();
 
-  factory Order.fromJson(Map<String, dynamic> json) => Order(
-    json['customer_name'],
-    json['drink'],
-    json['special_instructions'],
-  );
+  bool get isCompleted => _completed;
+
+  void markCompleted() {
+    _completed = true;
+  }
 }
+
+
